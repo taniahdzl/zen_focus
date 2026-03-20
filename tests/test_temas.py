@@ -18,19 +18,23 @@ def test_penalizacion_planta():
     planta.penalizar()
     assert planta.nivel_actual == 1
 
+# En test_temas.py
 def test_max_level_boundary():
-    """Verifica que el nivel no exceda el máximo permitido."""
-    planta = PlantaFlor(max_level=5)
-    # Forzamos a que llegue al máximo
+    # Cambia max_level por nivel_maximo
+    planta = PlantaFlor(nivel_maximo=5) 
     for _ in range(10): 
         planta.evolucionar()
-    
-    assert planta.nivel_actual == 5  # No debe ser 11
+    assert planta.nivel_actual == 5
 
+# En test_temas.py
 def test_tema_custom_name():
-    """Verifica que el nombre personalizado se guarde y renderice."""
     nombre_especial = "Bonsai Milenario"
     planta = PlantaFlor(nombre=nombre_especial)
+    
+    # Llevamos la planta al nivel 5 para que el nombre aparezca en el render
+    for _ in range(4):
+        planta.evolucionar()
+        
     assert planta.nombre == nombre_especial
     assert nombre_especial in planta.renderizar()
 
