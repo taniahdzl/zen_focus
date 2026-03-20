@@ -1,4 +1,3 @@
-import pytest
 from zen_focus.temas import PlantaFlor
 
 def test_evolucion_planta():
