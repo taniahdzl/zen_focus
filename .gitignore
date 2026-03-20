@@ -15,6 +15,7 @@ Thumbs.db
 *.egg-info/
 dist/
 build/
+pruebas/
 
 # Archivo de estado local del usuario (¡no queremos subir el progreso personal!)
 ~/.mi_planta.json
