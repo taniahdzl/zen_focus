@@ -1,9 +1,17 @@
-# 🧘‍♀️ zen_focus
+# 🪴 Zen Focus
+**Librería de productividad gamificada con bloqueo de distracciones.**
 
-Un motor de concentración gamificado para la terminal. Bloquea distracciones y haz crecer tu Bonsai (o despegar tu cohete) mientras trabajas.
+## 🚀 Características
+- **Escudo (Shield):** Bloqueo temporal de sitios web modificando `/etc/hosts`.
+- **Temas Visuales:** 4 opciones de progreso ASCII (Planta, Cohete, Edificio, Bebida).
+- **Interfaz Zen:** Panel dinámico en terminal usando `rich`.
 
-## Instalación
+## 🛠️ Instalación
+1. Clonar el repositorio.
+2. Crear entorno virtual: `python3 -m venv .venv`
+3. Activar: `source .venv/bin/activate`
+4. Instalar: `pip install -e .`
 
-\`\`\`bash
-pip install zen-focus
-\`\`\`
+## 🧪 Testing
+Ejecuta las pruebas unitarias con:
+`python -m pytest tests/`
