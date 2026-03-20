@@ -19,3 +19,5 @@ Los desarrolladores y estudiantes de ciencia de datos a menudo pierden el enfoqu
 ## 🧪 Testing
 Ejecuta las pruebas unitarias con:
 `python -m pytest tests/`
+
+![PyPI - Version](https://img.shields.io/pypi/v/zen-focus)
