@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    # Esto permite que el profesor vea la animación de la planta en su terminal
+    tty: true
+    stdin_open: true
+    command: python prueba.py
