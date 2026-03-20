@@ -1,17 +1,26 @@
-# Usamos una imagen ligera de Python
+# 1. Imagen base oficial de Python
 FROM python:3.11-slim
 
-# Directorio de trabajo
+# 2. Evitar que Python genere archivos .pyc y use buffer de salida
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+# 3. Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiamos archivos necesarios
+# 4. Copiar archivos de configuración e instalar dependencias
 COPY pyproject.toml .
 COPY README.md .
-COPY zen_focus/ ./zen_focus/
-COPY tests/ ./tests/
-
-# Instalamos la librería y pytest
+RUN pip install --upgrade pip
 RUN pip install . pytest rich
 
-# Comando por defecto: correr los tests para demostrar que funciona
+# 5. Copiar el código fuente y los tests
+COPY zen_focus/ ./zen_focus/
+COPY tests/ ./tests/
+COPY prueba.py /app/prueba.py
+
+# Ejecutamos usando la ruta completa para que no haya error
+CMD ["python", "/app/prueba.py"]
+
+# 6. Por defecto, corremos los tests al iniciar
 CMD ["pytest"]
