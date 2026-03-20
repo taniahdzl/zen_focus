@@ -8,19 +8,22 @@ ENV PYTHONUNBUFFERED=1
 # 3. Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# 4. Copiar archivos de configuración e instalar dependencias
+## Ahora seguimos los pasos para construir la imagen de manera eficiente:
+# 1. Copiamos solo lo necesario para instalar primero
 COPY pyproject.toml .
 COPY README.md .
+
+# 2. Instalamos dependencias básicas
 RUN pip install --upgrade pip
-RUN pip install . pytest rich
+RUN pip install pytest rich setuptools
 
-# 5. Copiar el código fuente y los tests
+# 3. Copiamos el código fuente
 COPY zen_focus/ ./zen_focus/
+COPY prueba.py .
 COPY tests/ ./tests/
-COPY prueba.py /app/prueba.py
 
-# Ejecutamos usando la ruta completa para que no haya error
-CMD ["python", "/app/prueba.py"]
+# 4. Instalamos la librería de forma que Python la reconozca
+RUN pip install -e .
 
-# 6. Por defecto, corremos los tests al iniciar
-CMD ["pytest"]
+# 5. Ejecutamos el script de prueba
+CMD ["python", "prueba.py"]

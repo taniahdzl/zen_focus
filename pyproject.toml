@@ -15,6 +15,8 @@ dependencies = [
     # Agregaremos 'rich' para la interfaz de terminal viva que discutimos
     "rich>=13.0.0", 
 ]
+[tool.setuptools.packages.find]
+include = ["zen_focus*"]  # Solo incluye la carpeta de la librería 
 
 [project.urls]
 Homepage = "https://github.com/taniahdzl/zen_focus"
