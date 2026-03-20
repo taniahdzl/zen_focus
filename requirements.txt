@@ -1,0 +1,9 @@
+iniconfig==2.3.0
+markdown-it-py==4.0.0
+mdurl==0.1.2
+packaging==26.0
+pluggy==1.6.0
+Pygments==2.19.2
+pytest==9.0.2
+rich==14.3.3
+-e git+https://github.com/taniahdzl/zen_focus.git@18e1ce7c4a97a994880238462fa83f11854efc8c#egg=zen_focus
