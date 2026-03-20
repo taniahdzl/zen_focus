@@ -1,63 +1,59 @@
 import time
 from rich.console import Console
-from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn
+from rich.live import Live
+from rich.panel import Panel
+from rich.progress import Progress, BarColumn, TextColumn
 
-# Instanciamos la consola de rich para imprimir con colores
 console = Console()
 
 class SesionZen:
-    """
-    Motor principal que coordina el tiempo de concentración,
-    el escudo bloqueador de distracciones y la evolución del tema visual.
-    """
-    
     def __init__(self, minutos: int, escudo, tema):
         self.minutos = minutos
-        self.segundos_totales = minutos * 60
+        self.segundos_totales = int(minutos * 60)
         self.escudo = escudo
         self.tema = tema
 
+    def _generar_display(self, progreso_relativo: float):
+        """
+        Calcula qué fase del tema mostrar basándose en el porcentaje de tiempo 
+        y devuelve un panel estético.
+        """
+        # Calcular nivel (1 a 5) proporcional al progreso (0.0 a 1.0)
+        nuevo_nivel = int(progreso_relativo * (self.tema.nivel_maximo - 1)) + 1
+        
+        # Solo actualizamos si el nivel ha subido
+        if nuevo_nivel > self.tema.nivel_actual:
+            for _ in range(nuevo_nivel - self.tema.nivel_actual):
+                self.tema.evolucionar()
+
+        # Creamos un panel que contiene el arte ASCII y una mini-info debajo
+        return Panel(
+            f"{self.tema.renderizar()}\n\n[bold cyan]Misión:[/bold cyan] {self.tema.nombre}",
+            title="[bold green]Zen Focus Mode[/bold green]",
+            subtitle=f"[bold white]{int(progreso_relativo * 100)}% Completado[/bold white]",
+            border_style="green",
+            padding=(1, 2)
+        )
+
     def iniciar(self):
-        """Inicia la cuenta regresiva y la barra de progreso."""
-        console.print(f"\n[bold green]Iniciando sesión de {self.minutos} minutos...[/bold green]")
-        console.print(f"[cyan]Tema elegido: {self.tema.nombre}[/cyan]")
-        console.print(self.tema.renderizar())
-
-        try:
-            # Creamos una barra de progreso visualmente atractiva
-            with Progress(
-                SpinnerColumn(),
-                TextColumn("[progress.description]{task.description}"),
-                BarColumn(),
-                TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
-                TextColumn("• Tiempo restante: {task.remaining}s"),
-                console=console
-            ) as progress:
+        console.print(f"\n[bold yellow]Entrando en estado de flujo por {self.minutos} min...[/bold yellow]")
+        
+        # La magia de 'Live' permite refrescar el panel sin llenar la pantalla de texto
+        with Live(self._generar_display(0), refresh_per_second=4, console=console) as live:
+            try:
+                for segundo in range(self.segundos_totales + 1):
+                    # Calculamos el progreso de 0.0 a 1.0
+                    progreso = segundo / self.segundos_totales
+                    
+                    # Actualizamos el dibujo en pantalla
+                    live.update(self._generar_display(progreso))
+                    
+                    if segundo < self.segundos_totales:
+                        time.sleep(1)
                 
-                # Agregamos la tarea a la barra
-                tarea = progress.add_task("[cyan]Concentración en curso...", total=self.segundos_totales)
-                
-                # Bucle principal del temporizador
-                for _ in range(self.segundos_totales):
-                    time.sleep(1)
-                    progress.update(tarea, advance=1)
+                console.print("\n[bold gold1] ¡Felicidades! Has mantenido el enfoque. [/bold gold1]")
             
-            # Si el bucle termina sin ser interrumpido, ¡fue un éxito!
-            self.completar_exito()
-
-        except KeyboardInterrupt:
-            # Atrapa cuando el usuario presiona Ctrl+C para rendirse
-            self.interrumpir()
-
-    def completar_exito(self):
-        """Se ejecuta cuando el tiempo termina correctamente."""
-        self.tema.evolucionar()
-        console.print("\n[bold gold1]✨ ¡Sesión completada con éxito! ✨[/bold gold1]")
-        console.print(self.tema.renderizar())
-
-    def interrumpir(self):
-        """Se ejecuta si el usuario rompe la sesión prematuramente."""
-        self.tema.penalizar()
-        console.print("\n[bold red]❌ ¡Sesión interrumpida![/bold red]")
-        console.print("Has perdido la concentración. El progreso visual se reinició.")
-        console.print(self.tema.renderizar())
+            except KeyboardInterrupt:
+                self.tema.penalizar()
+                live.update(self._generar_display(0))
+                console.print("\n[bold red] Sesión abortada. El progreso se ha perdido.[/bold red]")
