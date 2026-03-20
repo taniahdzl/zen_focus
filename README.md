@@ -3,7 +3,7 @@
 
 ## Problema Real: 
 Los desarrolladores y estudiantes de ciencia de datos a menudo pierden el enfoque debido a distracciones digitales (redes sociales) y la falta de retroalimentación visual durante tareas largas de procesamiento.
-Solución: Zen Focus automatiza el bloqueo de distracciones a nivel de red y transforma el tiempo de espera en una experiencia de "crecimiento visual" (Gamificación), aumentando la retención en el estado de Deep Work.
+**Solución:** Zen Focus automatiza el bloqueo de distracciones a nivel de red y transforma el tiempo de espera en una experiencia de "crecimiento visual" (Gamificación), aumentando la retención en el estado de Deep Work.
 
 ## 🚀 Características
 - **Escudo (Shield):** Bloqueo temporal de sitios web modificando `/etc/hosts`.
