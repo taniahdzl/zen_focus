@@ -1,0 +1,21 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Archivos compilados de Python
+__pycache__/
+*.pyc
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de la librería
+*.egg-info/
+dist/
+build/
+
+# Archivo de estado local del usuario (¡no queremos subir el progreso personal!)
+~/.mi_planta.json
+*.json
