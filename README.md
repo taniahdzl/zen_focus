@@ -1,6 +1,6 @@
 # 🪴 Zen Focus: Gamificación y Enfoque Profundo (Deep Work)
 
-[![PyPI version](https://badge.fury.io/py/zen-focus.svg)](https://badge.fury.io/py/zen-focus)
+[![PyPI version](https://img.shields.io/pypi/v/zen-focus.svg?color=success)](https://pypi.org/project/zen-focus/)
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/taniahdzl/zen_focus/blob/main/Tutorial_Zen_Focus.ipynb)
 
 **Zen Focus** es una librería de Python orientada a proteger la atención de desarrolladores, científicos de datos y estudiantes. 
