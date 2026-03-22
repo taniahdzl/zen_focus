@@ -1,23 +1,26 @@
-# 🪴 Zen Focus
-**Librería de productividad gamificada con bloqueo de distracciones.**
+# 🪴 Zen Focus: Gamificación y Enfoque Profundo (Deep Work)
 
-## Problema Real: 
-Los desarrolladores y estudiantes de ciencia de datos a menudo pierden el enfoque debido a distracciones digitales (redes sociales) y la falta de retroalimentación visual durante tareas largas de procesamiento.
-**Solución:** Zen Focus automatiza el bloqueo de distracciones a nivel de red y transforma el tiempo de espera en una experiencia de "crecimiento visual" (Gamificación), aumentando la retención en el estado de Deep Work.
+[![PyPI version](https://badge.fury.io/py/zen-focus.svg)](https://badge.fury.io/py/zen-focus)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/tu-usuario/zen_focus/blob/main/Tutorial_Zen_Focus_Moni.ipynb)
 
-## 🚀 Características
-- **Escudo (Shield):** Bloqueo temporal de sitios web modificando `/etc/hosts`.
-- **Temas Visuales:** 4 opciones de progreso ASCII (Planta, Cohete, Edificio, Bebida).
-- **Interfaz Zen:** Panel dinámico en terminal usando `rich`.
+**Zen Focus** es una librería de Python orientada a proteger la atención de desarrolladores, científicos de datos y estudiantes. 
 
-## 🛠️ Instalación
-1. Clonar el repositorio.
-2. Crear entorno virtual: `python3 -m venv .venv`
-3. Activar: `source .venv/bin/activate`
-4. Instalar: `pip install -e .`
+Cuando ejecutamos procesos de alta carga computacional (limpieza de DataFrames gigantes, entrenamiento de modelos, simulaciones estadísticas), los tiempos de espera nos hacen perder nuestro estado de *Deep Work* al abrir redes sociales. Zen Focus resuelve esto mediante **gamificación visual** en la terminal y un **escudo de red** a nivel del sistema operativo.
 
-## 🧪 Testing
-Ejecuta las pruebas unitarias con:
-`python -m pytest tests/`
+---
 
-![PyPI - Version](https://img.shields.io/pypi/v/zen-focus)
+## ✨ Características Principales
+
+1. **Gamificación Visual (POO):** Arte ASCII interactivo que evoluciona en 5 fases proporcionalmente al avance de tu código o tiempo de sesión.
+2. **Arquitectura Extensible:** Motor basado en clases abstractas (`TemaBase`). Incluye temas predeterminados: `PlantaFlor`, `Cohete`, `Edificio` y `Bebida`.
+3. **Escudo de Red (Context Manager):** Modifica dinámicamente el archivo `hosts` (`/etc/hosts` o `System32/drivers/etc/hosts`) para bloquear sitios web distractores y restaura la conexión de forma segura al finalizar o en caso de error.
+4. **Interfaz de Terminal (CLI):** Integración nativa con `rich` para paneles en vivo que no inundan la consola.
+
+---
+
+## 🚀 Instalación
+
+Instala la última versión estable directamente desde PyPI:
+
+```bash
+pip install zen-focus rich
