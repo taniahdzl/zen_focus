@@ -1,18 +1,20 @@
 from abc import ABC, abstractmethod
 
+
 class TemaBase(ABC):
     """
     Clase base abstracta para todos los temas visuales de zen_focus.
     Cualquier tema nuevo (Bonsai, Cohete, etc.) debe heredar de esta clase
     e implementar obligatoriamente estos métodos.
     """
-    
+
     def __init__(self, nombre: str, nivel_maximo: int = 5):
         self.nombre = nombre
         self.nivel_actual = 1
         self.nivel_maximo = nivel_maximo
 
-    # Métodos abstractos que son obligatorios en todas las subclases
+    # ── métodos abstractos (obligatorios en subclases) ─────────────────────
+
     @abstractmethod
     def evolucionar(self):
         """Sube el nivel del artefacto visual."""
@@ -28,25 +30,27 @@ class TemaBase(ABC):
         """Devuelve el string con el arte ASCII correspondiente al nivel actual."""
         pass
 
-    def renderizar_ipython(self): 
-        """ 
-        Muestra el arte ASCII del tema como HTML enriquecido dentro de un
-        Jupyter Notebook, sin necesidad de rich ni de bloquear el kernel. 
+    # ── NUEVO #1: renderizar_ipython() ─────────────────────────────────────
 
-        Uso: 
+    def renderizar_ipython(self):
+        """
+        Muestra el arte ASCII del tema como HTML enriquecido dentro de un
+        Jupyter Notebook, sin necesidad de rich ni de bloquear el kernel.
+
+        Uso:
             planta = PlantaFlor("Girasol")
             planta.evolucionar()
-            planta.renderizar_ipython()
+            planta.renderizar_ipython()   # ← ejecutar en una celda
         """
-        try: 
+        try:
             from IPython.display import display, HTML
-        except ImportError: 
+        except ImportError:
             print(self.renderizar())
-            return 
-        
-        barra_llena = int((self.nivel_actual/self.nivel_maximo) * 10) 
+            return
+
+        barra_llena = int((self.nivel_actual / self.nivel_maximo) * 10)
         barra = "█" * barra_llena + "░" * (10 - barra_llena)
-        porcentaje = int((self.nivel_actual/self.nivel_maximo) * 100)
+        porcentaje = int((self.nivel_actual / self.nivel_maximo) * 100)
 
         arte_escapado = (
             self.renderizar()
@@ -85,23 +89,27 @@ class TemaBase(ABC):
         """
         display(HTML(html))
 
-        @classmethod
-        def info_clase(cls): 
-            """ 
-            Imprime la jerarquía de herencia, atributos de instancia y métodos abstractos
-            de la clase como una nueva tabla HTML en el notebook. 
+    # ── NUEVO #3: info_clase() ──────────────────────────────────────────────
 
-            Uso: 
-                TemaBase.info_clase()
-                PlantaFlor.info_clase()
-            """
-            import inspect 
+    @classmethod
+    def info_clase(cls):
+        """
+        Imprime la jerarquía de herencia, atributos de instancia y métodos
+        abstractos de la clase como una tabla HTML en el notebook.
 
-            try: 
-                from IPython.display import display, HTML
-            except ImportError:
-                print(f"Clase: {cls.__name__}")
-                print(f"MRO:{' → '.join(c.__name__ for c in cls.__mro__)}")
+        Ideal para explicar ABC, herencia y polimorfismo en clase.
+
+        Uso:
+            TemaBase.info_clase()
+            PlantaFlor.info_clase()
+        """
+        import inspect
+
+        try:
+            from IPython.display import display, HTML
+        except ImportError:
+            print(f"Clase: {cls.__name__}")
+            print(f"MRO:   {' → '.join(c.__name__ for c in cls.__mro__)}")
             return
 
         # Jerarquía (MRO)
