@@ -8,7 +8,6 @@ ENV PYTHONUNBUFFERED=1
 # 3. Directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-## Ahora seguimos los pasos para construir la imagen de manera eficiente:
 # 1. Copiamos solo lo necesario para instalar primero
 COPY pyproject.toml .
 COPY README.md .
@@ -22,7 +21,7 @@ COPY zen_focus/ ./zen_focus/
 COPY prueba.py .
 COPY tests/ ./tests/
 
-# 4. Instalamos la librería de forma que Python la reconozca
+# 4. Instalamos la librería en modo editable
 RUN pip install -e .
 
 # 5. Ejecutamos el script de prueba

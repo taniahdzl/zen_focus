@@ -3,4 +3,3 @@ services:
     build: .
     tty: true
     stdin_open: true
-    # Quitamos el comando de aquí para que use el CMD del Dockerfile
