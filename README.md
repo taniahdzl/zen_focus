@@ -15,6 +15,8 @@ Cuando ejecutamos procesos de alta carga computacional (limpieza de DataFrames g
 2. **Arquitectura Extensible:** Motor basado en clases abstractas (`TemaBase`). Incluye temas predeterminados: `PlantaFlor`, `Cohete`, `Edificio` y `Bebida`.
 3. **Escudo de Red (Context Manager):** Modifica dinámicamente el archivo `hosts` (`/etc/hosts` o `System32/drivers/etc/hosts`) para bloquear sitios web distractores y restaura la conexión de forma segura al finalizar o en caso de error.
 4. **Interfaz de Terminal (CLI):** Integración nativa con `rich` para paneles en vivo que no inundan la consola.
+5. **Decorador `@con_progreso`:** Gamifica cualquier función Python sin modificar su código interno. El tema evoluciona mientras la función se ejecuta.
+6. **Widgets Interactivos:** Explora los temas en Jupyter Notebooks y Google Colab con controles interactivos de sliders y botones.
 
 ---
 
@@ -31,9 +33,9 @@ Para probar de inmediato sin configuraciones locales, haz clic en el botón de O
 ---
 
 ## 📖 Uso Básico
-La librería puede usarse de dos maneras principales: integrada en tus scripts largos o como una sesión de enfoque dedicada.
+La librería puede usarse de varias maneras: integrada en scripts, como decorador, en sesiones dedicadas o en notebooks interactivos.
 
-1. Gamificar un Script Largo
+### 1. Gamificar un Script Largo
 Importa un tema y hazlo evolucionar mientras tu código trabaja:
 
 ```python
@@ -48,7 +50,34 @@ for lote in range(5):
     mi_planta.evolucionar()
     print(mi_planta.renderizar())
 ```
-2. Modo Deep Work (Con bloqueo de sitios)
+
+### 2. Decorador `@con_progreso`
+Gamifica funciones automáticamente con un simple decorador. Perfecto para entrenamientos de ML, procesamiento de datos y análisis científicos:
+
+```python
+from zen_focus.decoradores import con_progreso
+from zen_focus.temas import Cohete
+
+@con_progreso(tema=Cohete("Análisis de datos"), pasos=3)
+def pipeline_datos(df):
+    df = df.dropna()           # Paso 1
+    yield
+    df = df[df['valor'] > 0]   # Paso 2
+    yield
+    resultado = df.sum()       # Paso 3
+    return resultado
+
+resultado = pipeline_datos(mi_df)
+```
+
+**Sin yield (avance automático en background):**
+```python
+@con_progreso(tema=PlantaFlor("Entrenamiento"), retardo=1.0)
+def entrenar_modelo(X_train, y_train):
+    return modelo.fit(X_train, y_train)
+```
+
+### 3. Modo Deep Work (Con bloqueo de sitios)
 Utiliza la clase SesionZen junto con el Escudo para bloquear distracciones.
 Nota: Este script requiere ser ejecutado con permisos de administrador (sudo) para modificar las rutas de red.
 
@@ -70,6 +99,28 @@ with Escudo(bloquear=distracciones) as mi_escudo:
     # 4. ¡Iniciamos el motor en la terminal!
     sesion.iniciar()
 ```
+
+### 4. Widget Interactivo (Jupyter / Colab)
+Explora y controla los temas interactivamente en notebooks:
+
+```python
+from zen_focus.widgets import TemaWidget
+from zen_focus.temas import PlantaFlor
+
+# Crear y mostrar el widget
+widget = TemaWidget(PlantaFlor("Mi Planta"))
+widget.mostrar()
+```
+
+El widget incluye:
+- **Slider de evolución:** Controla el nivel del tema (1 a n)
+- **Botón Evolucionar:** Avanza un nivel (+)
+- **Botón Penalizar:** Retrocede un nivel (−)
+- **Botón Reset:** Reinicia a nivel 1
+- **Vista en vivo:** Arte ASCII actualizado dinámicamente
+
+*Requiere:* `pip install ipywidgets`
+
 ---
 ## 🐳 Ejecución Local con Docker
 Si deseas probar la interfaz completa y correr los tests automatizados en un entorno aislado sin modificar los permisos de red de tu máquina anfitriona, el proyecto incluye una configuración de Docker lista para usar.
