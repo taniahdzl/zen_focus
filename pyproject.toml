@@ -4,19 +4,25 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "zen-focus"
-version = "0.2.2"
+version = "0.2.3"
 description = "Un motor de concentración gamificado para la terminal."
 readme = "README.md"
 requires-python = ">=3.9"
 authors = [
-    { name = "Tu Nombre", email = "tu@email.com" }
+    { name = "Tania H", email = "therna24@itam.com" }
 ]
 dependencies = [
-    # Agregaremos 'rich' para la interfaz de terminal viva que discutimos
-    "rich>=13.0.0", 
+    "rich>=13.0.0",
 ]
+
+[project.optional-dependencies]
+notebook = [
+    "ipywidgets>=8.0.0",
+    "ipython>=7.0.0",
+]
+
 [tool.setuptools.packages.find]
-include = ["zen_focus*"]  # Solo incluye la carpeta de la librería 
+include = ["zen_focus*"]
 
 [project.urls]
 Homepage = "https://github.com/taniahdzl/zen_focus"

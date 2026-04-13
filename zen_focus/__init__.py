@@ -2,7 +2,11 @@ from .escudo import Escudo
 from .motor import SesionZen
 from .temas import TemaBase, PlantaFlor, Cohete, Edificio, Bebida
 from .decoradores import con_progreso
-from .widgets import TemaWidget
+
+try:
+    from .widgets import TemaWidget
+except ImportError:
+    TemaWidget = None  
 
 __all__ = [
     "Escudo",
