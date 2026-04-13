@@ -175,8 +175,9 @@ class SesionZen:
 
 def _es_notebook() -> bool:
     """Detecta si el código corre dentro de un Jupyter/Colab Notebook."""
-    try:
-        shell = get_ipython().__class__.__name__  # noqa: F821
-        return shell in ("ZMQInteractiveShell", "Shell")  # Jupyter / Colab
-    except NameError:
+    import builtins
+    get_ipython = getattr(builtins, "get_ipython", None)
+    if get_ipython is None:
         return False
+    shell = get_ipython().__class__.__name__
+    return shell in ("ZMQInteractiveShell", "Shell") 
